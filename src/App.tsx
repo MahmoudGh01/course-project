@@ -1,17 +1,16 @@
 import { useState } from "react"
 
-import Guesses from "./Guesses"
-import Keyboard from "./Keyboard"
-import { type State, createState, getLetterState } from "./logic"
+import Play from "./Play"
+import Start from "./Start"
 
 const App: React.FC = () => {
-  const [state, setState] = useState<State>()
+  const [active, setActive] = useState(false)
 
-  if (!state) {
+  if (!active) {
     return (
       <>
         <h1>Wordlish</h1>
-        <button onClick={() => setState(createState())}>Begin</button>
+        <Start onStart={() => setActive(true)} />
       </>
     )
   }
@@ -19,12 +18,7 @@ const App: React.FC = () => {
   return (
     <>
       <h1>Wordlish</h1>
-      <Guesses
-        getState={(letter: string, position: number) =>
-          getLetterState(state, letter, position)
-        }
-      />
-      <Keyboard getState={(letter: string) => getLetterState(state, letter)} />
+      <Play />
     </>
   )
 }

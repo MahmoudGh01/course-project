@@ -8,6 +8,8 @@ const keyboard = [
 
 const Keyboard: React.FC<{
   getState: (letter: string) => string
+  onChange: (guess: string) => void
+  onSubmit: (guess: string) => boolean
 }> = ({ getState }) => {
   return (
     <div className={styles.keyboard}>

@@ -1,24 +1,29 @@
-import { useState } from "react"
+import { Link, useParams } from "react-router"
 
-import Guesses from "./Guesses"
-import Keyboard from "./Keyboard"
-import { type State, createState, getLetterState } from "./logic"
+import games from "../games"
 
-const Play: React.FC = (props) => {
-  const [state, setState] = useState<State>(() => createState())
+const Play: React.FC = () => {
+  const { slug } = useParams()
+
+  const game = slug && games[slug]
+  if (!game) {
+    return (
+      <>
+        <h1>Error</h1>
+        <p>Cannot find game {slug}.</p>
+        <p>
+          <Link to="/">Go Home</Link>
+        </p>
+      </>
+    )
+  }
+
+  const { title, Play } = game
 
   return (
     <>
-      <Guesses
-        getState={(letter: string, position: number) =>
-          getLetterState(state, letter, position)
-        }
-      />
-      <Keyboard
-        getState={(letter: string) => getLetterState(state, letter)}
-        onChange={(guess) => setState(state)}
-        onSubmit={(guess) => false}
-      />
+      <h1>Play {title}</h1>
+      <Play />
     </>
   )
 }

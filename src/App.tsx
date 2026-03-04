@@ -1,19 +1,15 @@
-import { lazy } from "react"
 import { Route, Routes } from "react-router"
 
 import AppLayout from "./AppLayout"
-import Foo from "./Foo"
-
-const Play = lazy(() => import("./Play"))
-const Start = lazy(() => import("./Start"))
+import Home from "./Home"
+import Play from "./Play"
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route Component={AppLayout}>
-        <Route index Component={Start} />
-        <Route path="/play" Component={Play} />
-        <Route path="/foo/:slug" Component={Foo} />
+        <Route index Component={Home} />
+        <Route path="/play/:slug" Component={Play} />
       </Route>
     </Routes>
   )

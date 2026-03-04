@@ -1,7 +1,19 @@
-const Start: React.FC<{ onStart: () => void }> = ({ onStart }) => {
+import { Link } from "react-router"
+
+const Start: React.FC = () => {
   return (
     <>
-      <button onClick={() => onStart()}>Begin</button>
+      <ul>
+        <li>
+          <Link to="/play">Begin</Link>
+        </li>
+        <li>
+          <Link to="/foo/one">Foo One</Link>
+        </li>
+        <li>
+          <Link to="/foo/two">Foo Two</Link>
+        </li>
+      </ul>
     </>
   )
 }

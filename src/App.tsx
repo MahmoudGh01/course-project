@@ -1,25 +1,21 @@
-import { useState } from "react"
+import { lazy } from "react"
+import { Route, Routes } from "react-router"
 
-import Play from "./Play"
-import Start from "./Start"
+import AppLayout from "./AppLayout"
+import Foo from "./Foo"
+
+const Play = lazy(() => import("./Play"))
+const Start = lazy(() => import("./Start"))
 
 const App: React.FC = () => {
-  const [active, setActive] = useState(false)
-
-  if (!active) {
-    return (
-      <>
-        <h1>Wordlish</h1>
-        <Start onStart={() => setActive(true)} />
-      </>
-    )
-  }
-
   return (
-    <>
-      <h1>Wordlish</h1>
-      <Play />
-    </>
+    <Routes>
+      <Route Component={AppLayout}>
+        <Route index Component={Start} />
+        <Route path="/play" Component={Play} />
+        <Route path="/foo/:slug" Component={Foo} />
+      </Route>
+    </Routes>
   )
 }
 

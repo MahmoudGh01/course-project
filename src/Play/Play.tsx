@@ -4,7 +4,7 @@ import Guesses from "./Guesses"
 import Keyboard from "./Keyboard"
 import { type State, createState, getLetterState } from "./logic"
 
-const Play: React.FC = () => {
+const Play: React.FC = (props) => {
   const [state, setState] = useState<State>(() => createState())
 
   return (

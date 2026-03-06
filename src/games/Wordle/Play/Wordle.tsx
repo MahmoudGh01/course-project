@@ -4,7 +4,7 @@ import Guesses from "./Guesses"
 import Keyboard from "./Keyboard"
 import { type State, createState, getLetterState } from "./logic"
 
-const Wordle: React.FC = (props) => {
+const Wordle: React.FC = () => {
   const [state, setState] = useState<State>(() => createState())
 
   return (
@@ -16,8 +16,11 @@ const Wordle: React.FC = (props) => {
       />
       <Keyboard
         getState={(letter: string) => getLetterState(state, letter)}
-        onChange={(guess) => setState(state)}
-        onSubmit={(guess) => false}
+        onChange={(guess) => setState((state) => ({ ...state, guess }))}
+        onSubmit={(guess) => {
+          setState((state) => ({ ...state, guess }))
+          return false
+        }}
       />
     </>
   )

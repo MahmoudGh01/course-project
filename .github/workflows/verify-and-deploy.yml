@@ -30,11 +30,29 @@ jobs:
       - name: depcheck
         run: npm run lint-depcheck
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test
+
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: github-pages
-    needs: verify
+    needs: test
 
     steps:
       - name: Checkout
@@ -56,8 +74,8 @@ jobs:
         with:
           path: ./dist
 
-  publish:
-    name: Publish
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     environment: github-pages
     needs: build

@@ -4,7 +4,7 @@ import Guesses from "./Guesses"
 import Keyboard from "./Keyboard"
 import { type State, createState, getLetterState } from "./logic"
 
-const Wordle: React.FC = () => {
+const Play: React.FC = () => {
   const [state, setState] = useState<State>(() => createState())
 
   return (
@@ -26,4 +26,4 @@ const Wordle: React.FC = () => {
   )
 }
 
-export default Wordle
+export default Play

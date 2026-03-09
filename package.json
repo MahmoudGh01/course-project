@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "imports": {
+    "#design/*": "./src/shared/design/*/index.ts",
+    "#design/*.css": "./src/shared/design/*/index.css",
+    "#shared/*": "./src/shared/*/index.ts"
+  },
   "scripts": {
     "lint": "npm run lint-typecheck && npm run lint-eslint && npm run lint-prettier && npm run lint-depcheck",
     "lint-typecheck": "tsc --noEmit",

@@ -1,32 +1,9 @@
 import { Suspense, use, useEffect, useState } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-type Cat = {
-  id: string
-  tags: string[]
-  created_at: string // TODO
-  url: string
-  mimetype: string
-}
+import { type Cat, getCat } from "../api"
 
-async function getCat(success: boolean = true): Promise<Cat> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
-  const response = await fetch(
-    `https://cataas.com/cat${success ? "" : "-error"}?json=true`,
-  )
-
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(`Cannot get cat. ${text}`)
-  }
-
-  const data = (await response.json()) as Cat
-
-  return data
-}
-
-const Play: React.FC = () => {
+const Wrapper: React.FC = () => {
   return (
     <>
       <ErrorBoundary
@@ -37,15 +14,15 @@ const Play: React.FC = () => {
           </>
         )}
       >
-        <Suspense fallback={<Cat />}>
-          <Cat />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Play />
         </Suspense>
       </ErrorBoundary>
     </>
   )
 }
 
-const Cat: React.FC = () => {
+const Play: React.FC = () => {
   const [promise, setPromise] = useState<Promise<Cat>>()
 
   useEffect(() => {
@@ -57,18 +34,20 @@ const Cat: React.FC = () => {
   }
 
   const cat = promise && use(promise)
+  if (!cat) return null
 
   return (
     <>
       <div>
-        <button onClick={() => refresh()}>Refresh</button>
+        <button onClick={() => refresh()}>Get new Cat!</button>
       </div>
-      {cat && <img src={cat.url} width="512" />}
+
+      <img src={cat.url} width="512" />
     </>
   )
 }
 
-export default Play
+export default Wrapper
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {

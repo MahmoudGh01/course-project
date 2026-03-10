@@ -1,7 +1,7 @@
-import { Suspense, use, useEffect, useState } from "react"
+import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { type Cat, getCat } from "../api"
+import { useCat, type Cat } from "../api"
 
 const Wrapper: React.FC = () => {
   return (
@@ -9,12 +9,12 @@ const Wrapper: React.FC = () => {
       <ErrorBoundary
         fallbackRender={({ error, resetErrorBoundary }) => (
           <>
-            <div>{getErrorMessage(error)}</div>
             <button onClick={() => resetErrorBoundary()}>Retry</button>
+            <div>{getErrorMessage(error)}</div>
           </>
         )}
       >
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<PlayView />}>
           <Play />
         </Suspense>
       </ErrorBoundary>
@@ -23,26 +23,29 @@ const Wrapper: React.FC = () => {
 }
 
 const Play: React.FC = () => {
-  const [promise, setPromise] = useState<Promise<Cat>>()
+  const [cat, { refresh }] = useCat()
+  if (!cat) return <PlayView />
 
-  useEffect(() => {
-    setPromise(getCat())
-  }, [])
+  return <PlayView cat={cat} refresh={refresh} />
+}
 
-  const refresh = () => {
-    setPromise(getCat(false))
-  }
-
-  const cat = promise && use(promise)
-  if (!cat) return null
-
+const PlayView: React.FC<{ cat?: Cat; refresh?: () => void }> = ({
+  cat,
+  refresh,
+}) => {
   return (
     <>
       <div>
-        <button onClick={() => refresh()}>Get new Cat!</button>
+        <button disabled={!refresh} onClick={() => refresh?.()}>
+          Get new Cat!
+        </button>
       </div>
 
-      <img src={cat.url} width="512" />
+      {cat ? (
+        <img src={cat.url} width="512" />
+      ) : (
+        <div style={{ width: "512px", height: "512px", background: "gray" }} />
+      )}
     </>
   )
 }

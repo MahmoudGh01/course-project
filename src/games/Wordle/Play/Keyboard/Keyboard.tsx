@@ -1,3 +1,6 @@
+import { useWordle, useWordleGuess } from "../context"
+import { getLetterState } from "../logic"
+
 import styles from "./Keyboard.module.css"
 
 const keyboard = [
@@ -6,11 +9,18 @@ const keyboard = [
   ["z", "x", "c", "v", "b", "n", "m"],
 ]
 
-const Keyboard: React.FC<{
-  getState: (letter: string) => string
-  onChange: (guess: string) => void
-  onSubmit: (guess: string) => boolean
-}> = ({ getState }) => {
+const Keyboard: React.FC = () => {
+  const wordle = useWordle()
+  const { updateGuess, submitGuess } = useWordleGuess()
+
+  const onChange = (guess: string) => {
+    updateGuess(guess)
+  }
+
+  const onSubmit = () => {
+    submitGuess()
+  }
+
   return (
     <div className={styles.keyboard}>
       {keyboard.map((row, index) => (
@@ -20,7 +30,7 @@ const Keyboard: React.FC<{
               key={letter}
               className={styles.key}
               style={{
-                background: getState(letter),
+                background: getLetterState(wordle, letter),
               }}
             >
               {letter}

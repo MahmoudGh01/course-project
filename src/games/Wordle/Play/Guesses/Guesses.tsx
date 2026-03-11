@@ -1,12 +1,15 @@
 import cx from "classnames"
 
+import { useWordle } from "../context"
+import { getLetterState } from "../logic"
+
 import styles from "./Guesses.module.css"
 
 const NUM_GUESSES = 6
 
-const Guesses: React.FC<{
-  getState: (letter: string, position: number) => string
-}> = ({ getState }) => {
+const Guesses: React.FC = () => {
+  const wordle = useWordle()
+
   return (
     <div className={cx("guesses", styles.guesses)}>
       {Array.from<string>({ length: NUM_GUESSES })
@@ -18,7 +21,7 @@ const Guesses: React.FC<{
                 key={index}
                 className={styles.letter}
                 style={{
-                  background: getState(letter, index),
+                  background: getLetterState(wordle, letter, index),
                 }}
               >
                 {letter === " " ? "_" : letter}

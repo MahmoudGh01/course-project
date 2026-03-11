@@ -23,3 +23,7 @@ export function getLetterState(
 
   return states.unknown
 }
+
+export function checkGuess(state: State, guess: string): boolean {
+  return false
+}

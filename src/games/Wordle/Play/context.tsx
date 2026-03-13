@@ -4,20 +4,43 @@ import {
   useContext,
   useMemo,
   useState,
-} from "react"
+  type ReactNode,
+} from 'react'
 
-import { checkGuess, createState, type State } from "./logic"
+import { createState, submitGuess, type State } from './logic'
 
+/**
+ * Context value type for Wordle game
+ */
 type ContextValue = {
   state: State
   setState: React.Dispatch<React.SetStateAction<State>>
 }
 
+/**
+ * Props for WordleProvider
+ */
+export type WordleProviderProps = {
+  children: ReactNode
+}
+
+/**
+ * Return type for useWordleGuess hook
+ */
+export type WordleGuessActions = {
+  guess: string
+  updateGuess: (guess: string) => void
+  submitGuess: () => void
+}
+
 const WordleContext = createContext<ContextValue | undefined>(undefined)
 
-export const WordleProvider: React.FC<{ children: React.ReactNode }> = ({
+/**
+ * Provider component for Wordle game state
+ */
+export const WordleProvider: React.FC<WordleProviderProps> = ({
   children,
-}) => {
+}): React.JSX.Element => {
   const [state, setState] = useState<State>(() => createState())
 
   const context = useMemo(() => ({ state, setState }), [state])
@@ -25,41 +48,58 @@ export const WordleProvider: React.FC<{ children: React.ReactNode }> = ({
   return <WordleContext value={context}>{children}</WordleContext>
 }
 
+/**
+ * Hook to access Wordle game state
+ * @throws Error if used outside WordleProvider
+ * @returns Current game state
+ */
 export function useWordle(): State {
   const context = useContext(WordleContext)
-  if (!context) throw new Error("Requires WordleContext.")
+  if (!context) {
+    throw new Error('useWordle must be used within WordleProvider')
+  }
 
   return context.state
 }
 
-export function useWordleGuess(): {
-  guess: string
-  updateGuess: (guess: string) => void
-  submitGuess: () => void
-} {
+/**
+ * Hook to access Wordle guess actions
+ * @throws Error if used outside WordleProvider
+ * @returns Object with guess, updateGuess, and submitGuess functions
+ */
+export function useWordleGuess(): WordleGuessActions {
   const context = useContext(WordleContext)
-  if (!context) throw new Error("Requires WordleContext.")
+  if (!context) {
+    throw new Error('useWordleGuess must be used within WordleProvider')
+  }
 
   const updateGuess = useCallback(
-    (guess: string) => {
-      context.setState((state) => ({ ...state, guess }))
+    (newGuess: string) => {
+      // Only allow letters and limit to word length
+      const sanitized = newGuess.toUpperCase().replace(/[^A-Z]/g, '')
+      const limited = sanitized.slice(0, context.state.word.length)
+
+      context.setState((state) => ({ ...state, guess: limited }))
     },
     [context],
   )
 
-  const submitGuess = useCallback(() => {
-    if (checkGuess(context.state, context.state.guess)) {
-      //
-    } else {
-      //
+  const handleSubmitGuess = useCallback(() => {
+    const { state } = context
+
+    // Validate guess length
+    if (state.guess.length !== state.word.length) {
+      return
     }
 
-    context.setState((state) => ({ ...state, guess: "" }))
+    // Submit the guess and update state
+    const newState = submitGuess(state, state.guess)
+    context.setState(newState)
   }, [context])
 
   return {
     guess: context.state.guess,
     updateGuess,
-    submitGuess,
+    submitGuess: handleSubmitGuess,
   }
 }

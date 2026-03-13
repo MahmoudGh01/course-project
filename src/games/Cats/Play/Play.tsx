@@ -1,61 +1,105 @@
-import { Suspense } from "react"
-import { ErrorBoundary } from "react-error-boundary"
+import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
-import { useCat, type Cat } from "../api"
+import Button from '#design/Button'
+import Card from '#design/Card'
 
-const Wrapper: React.FC = () => {
+import { useCat } from '../api'
+
+import CatImage from './CatImage'
+import ErrorFallback from './ErrorFallback'
+import styles from './Play.module.css'
+
+/**
+ * Wrapper component with error boundary and suspense
+ */
+const Wrapper: React.FC = (): React.JSX.Element => {
   return (
-    <>
-      <ErrorBoundary
-        fallbackRender={({ error, resetErrorBoundary }) => (
-          <>
-            <button onClick={() => resetErrorBoundary()}>Retry</button>
-            <div>{getErrorMessage(error)}</div>
-          </>
-        )}
-      >
-        <Suspense fallback={<PlayView />}>
+    <div className={styles.container}>
+      <ErrorBoundary fallbackRender={ErrorFallback}>
+        <Suspense fallback={<LoadingView />}>
           <Play />
         </Suspense>
       </ErrorBoundary>
-    </>
+    </div>
   )
 }
 
-const Play: React.FC = () => {
+/**
+ * Main play component with data fetching
+ */
+const Play: React.FC = (): React.JSX.Element => {
   const [cat, { refresh }] = useCat()
-  if (!cat) return <PlayView />
 
-  return <PlayView cat={cat} refresh={refresh} />
+  return <PlayView cat={cat} onRefresh={refresh} />
 }
 
-const PlayView: React.FC<{ cat?: Cat; refresh?: () => void }> = ({
-  cat,
-  refresh,
-}) => {
-  return (
-    <>
-      <div>
-        <button disabled={!refresh} onClick={() => refresh?.()}>
-          Get new Cat!
-        </button>
-      </div>
+/**
+ * Presentation component for the Cats game
+ */
+type PlayViewProps = {
+  cat?: {
+    id: string
+    tags: string[]
+    created_at: Date
+    url: string
+    mimetype: string
+  }
+  onRefresh?: () => void
+}
 
-      {cat ? (
-        <img src={cat.url} width="512" />
-      ) : (
-        <div style={{ width: "512px", height: "512px", background: "gray" }} />
-      )}
-    </>
+const PlayView: React.FC<PlayViewProps> = ({
+  cat,
+  onRefresh,
+}): React.JSX.Element => {
+  return (
+    <Card variant="elevated" className={styles.card}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Random Cat Generator</h1>
+        <p className={styles.description}>
+          Click the button below to generate a random cat image
+        </p>
+
+        <CatImage cat={cat} />
+
+        <Button
+          variant="primary"
+          size="large"
+          fullWidth
+          onClick={onRefresh}
+          disabled={!onRefresh}
+          className={styles.button}
+        >
+          Get New Cat! 🐱
+        </Button>
+
+        {cat && (
+          <div className={styles.metadata}>
+            <small>
+              Fetched: {cat.created_at.toLocaleDateString()} • ID: {cat.id}
+            </small>
+          </div>
+        )}
+      </div>
+    </Card>
+  )
+}
+
+/**
+ * Loading view component
+ */
+const LoadingView: React.FC = (): React.JSX.Element => {
+  return (
+    <Card variant="elevated" className={styles.card}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Random Cat Generator</h1>
+        <CatImage isLoading />
+        <Button variant="primary" size="large" fullWidth disabled>
+          Loading...
+        </Button>
+      </div>
+    </Card>
   )
 }
 
 export default Wrapper
-
-function getErrorMessage(error: unknown) {
-  if (error instanceof Error) {
-    return `Error: ${error.message}`
-  }
-
-  return "Something went wrong."
-}

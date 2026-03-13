@@ -1,0 +1,25 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+build
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# Test coverage
+coverage
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

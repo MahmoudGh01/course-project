@@ -1,6 +1,6 @@
-import { Link, useParams } from "react-router"
+import { Link, useParams } from 'react-router'
 
-import games from "../games"
+import games from '../games'
 
 const Play: React.FC = () => {
   const { slug } = useParams()

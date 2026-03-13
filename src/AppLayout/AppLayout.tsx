@@ -1,5 +1,5 @@
-import { ErrorBoundary } from "react-error-boundary"
-import { Outlet } from "react-router"
+import { ErrorBoundary } from 'react-error-boundary'
+import { Outlet } from 'react-router'
 
 const AppLayout: React.FC = () => {
   return (

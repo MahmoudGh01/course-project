@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router"
+import { Route, Routes } from 'react-router'
 
-import AppLayout from "./AppLayout"
-import Home from "./Home"
-import Play from "./Play"
+import AppLayout from './AppLayout'
+import Home from './Home'
+import Play from './Play'
 
 const App: React.FC = () => {
   return (

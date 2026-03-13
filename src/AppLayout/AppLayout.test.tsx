@@ -1,11 +1,11 @@
-import { render } from "@testing-library/react"
-import { MemoryRouter } from "react-router"
-import { describe, it } from "vitest"
+import { render } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
+import { describe, it } from 'vitest'
 
-import AppLayout from "./AppLayout"
+import AppLayout from './AppLayout'
 
-describe("AppLayout page", () => {
-  it("works", () => {
+describe('AppLayout page', () => {
+  it('works', () => {
     render(
       <MemoryRouter>
         <AppLayout />

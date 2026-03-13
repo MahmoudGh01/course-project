@@ -1,6 +1,6 @@
-import { Link } from "react-router"
+import { Link } from 'react-router'
 
-import games from "../games"
+import games from '../games'
 
 const Home: React.FC = () => {
   return (

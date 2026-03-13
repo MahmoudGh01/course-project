@@ -1,11 +1,24 @@
-type TypeBase = {
+/**
+ * Base type for all API responses that include a created_at field
+ */
+export type TypeBase = {
   created_at: Date
 }
 
-type ServerType<Type> = Omit<Type, "created_at"> & {
+/**
+ * Server representation of Type where created_at is a string instead of Date
+ */
+export type ServerType<Type> = Omit<Type, 'created_at'> & {
   created_at: string
 }
 
+/**
+ * Generic GET request handler for the Cat API
+ * @template Type - The expected response type (must extend TypeBase)
+ * @param path - API endpoint path
+ * @returns Promise<Type> with created_at transformed from string to Date
+ * @throws Error if the response is not ok
+ */
 export async function get<Type extends TypeBase>(path: string): Promise<Type> {
   const response = await fetch(`https://cataas.com${path}`)
 

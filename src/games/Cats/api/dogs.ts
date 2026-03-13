@@ -1,6 +1,6 @@
-import useAsync from "#shared/useAsync"
+import useAsync from '#shared/useAsync'
 
-import { get } from "./api"
+import { get } from './api'
 
 export type Dog = {
   id: string
@@ -13,7 +13,7 @@ export type Dog = {
 export async function getDog(success: boolean = true): Promise<Dog> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const dog = await get<Dog>(`/dog${success ? "" : "-error"}?json=true`)
+  const dog = await get<Dog>(`/dog${success ? '' : '-error'}?json=true`)
 
   return dog
 }

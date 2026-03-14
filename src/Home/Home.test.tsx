@@ -12,12 +12,37 @@ describe('Home page', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Games')
+    // Check main title
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Arcade' }),
+    ).toBeInTheDocument()
 
-    expect(screen.getByText('Play Go')).toHaveAttribute('href', '/play/go')
-    expect(screen.getByText('Play Wordle')).toHaveAttribute(
+    // Check section headings
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Games' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'High Scores' }),
+    ).toBeInTheDocument()
+
+    // Check game links by their game name text
+    expect(screen.getByText('Wordle').closest('a')).toHaveAttribute(
       'href',
       '/play/wordle',
+    )
+    expect(screen.getByText('Cats').closest('a')).toHaveAttribute(
+      'href',
+      '/play/cats',
+    )
+    expect(screen.getByText('Go').closest('a')).toHaveAttribute(
+      'href',
+      '/play/go',
+    )
+
+    // Check leaderboard link
+    expect(screen.getByText('View Leaderboard').closest('a')).toHaveAttribute(
+      'href',
+      '/leaderboard',
     )
   })
 })

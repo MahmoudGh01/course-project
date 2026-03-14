@@ -4,6 +4,7 @@
   align-items: center;
   min-height: 80vh;
   padding: 20px;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 100%);
 }
 
 .card {
@@ -15,21 +16,166 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  padding: 24px;
+  border-top: 3px solid #00ff88;
+  position: relative;
+  z-index: 1;
 }
 
 .title {
-  font-size: 36px;
-  font-weight: 700;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: 400;
   margin: 0 0 8px 0;
   text-align: center;
-  color: #333;
-  letter-spacing: 0.5px;
+  color: #00ff88;
+  letter-spacing: 2px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #00ff88;
+  width: 100%;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px #00ff88,
+    0 0 20px #00ff88,
+    0 0 40px #00ff88;
+  animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px #00ff88,
+      0 0 20px #00ff88;
+  }
+  50% {
+    text-shadow:
+      0 0 20px #00ff88,
+      0 0 40px #00ff88,
+      0 0 60px #00ff88;
+  }
 }
 
 .description {
-  font-size: 14px;
-  color: #666;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #00d4ff;
   text-align: center;
   margin: 0 0 16px 0;
+  padding: 12px 16px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 2px solid #00d4ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+
+/* Header section for game info */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-bottom: 3px solid #00ff88;
+  margin-bottom: 16px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 136, 0.1),
+    transparent,
+    rgba(0, 255, 136, 0.1)
+  );
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  border: 3px solid #ffff00;
+  background: rgba(255, 255, 0, 0.1);
+  position: relative;
+}
+
+/* Pixel corner decorations */
+.stat::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 8px;
+  height: 8px;
+  background: #ffff00;
+}
+
+.stat::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  background: #ffff00;
+}
+
+.statValue {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 20px;
+  color: #ffff00;
+  text-shadow: 0 0 10px #ffff00;
+}
+
+.statLabel {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #888;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* High score display */
+.highScore {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #ff0055;
+  text-align: center;
+  padding: 8px 16px;
+  border: 2px dashed #ff0055;
+  animation: scorePulse 1s ease-in-out infinite;
+}
+
+@keyframes scorePulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Lives/attempts display */
+.lives {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+
+.life {
+  width: 20px;
+  height: 20px;
+  background: #ff0055;
+  clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 70%, 20% 100%, 0% 35%);
+  box-shadow: 0 0 10px #ff0055;
+}
+
+.life.lost {
+  background: #333;
+  box-shadow: none;
 }

@@ -4,63 +4,206 @@
   align-items: center;
   gap: 16px;
   width: 100%;
+  padding: 20px;
+  border: 4px solid #00d4ff;
+  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.3),
+    inset 0 0 60px rgba(0, 212, 255, 0.05);
+  position: relative;
+}
+
+/* Arcade cabinet frame effect */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 2px dashed rgba(0, 212, 255, 0.3);
+  pointer-events: none;
 }
 
 .status {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 600;
+  padding: 12px 32px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 400;
   text-align: center;
+  border: 4px solid;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  animation: statusPulse 1s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 .won {
-  background-color: #6aaa64;
-  color: white;
+  background: linear-gradient(180deg, #00ff88 0%, #00cc6a 100%);
+  color: #0a0a0a;
+  border-color: #00cc6a;
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.5),
+    0 0 60px rgba(0, 255, 136, 0.3);
+  text-shadow: none;
+}
+
+.won::after {
+  content: '+ 1000 PTS';
+  display: block;
+  font-size: 10px;
+  margin-top: 8px;
+  color: #0a0a0a;
+  animation: pointsFloat 0.5s ease-out forwards;
+}
+
+@keyframes pointsFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .lost {
-  background-color: #787c7e;
+  background: linear-gradient(180deg, #ff0055 0%, #cc0044 100%);
   color: white;
+  border-color: #cc0044;
+  box-shadow:
+    0 0 30px rgba(255, 0, 85, 0.5),
+    0 0 60px rgba(255, 0, 85, 0.3);
 }
 
 .guesses {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid #333;
+  position: relative;
+}
+
+/* CRT screen effect */
+.guesses::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
 }
 
 .row {
   display: flex;
-  gap: 5px;
+  gap: 6px;
 }
 
 .letter {
   width: 62px;
   height: 62px;
-  border: 2px solid #d3d6da;
+  border: 4px solid #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  font-weight: 700;
-  color: #000;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: 400;
+  color: #fff;
   text-transform: uppercase;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
+  background: #1a1a2e;
+  box-sizing: border-box;
+  text-shadow: 0 0 10px currentColor;
+  position: relative;
 }
 
 .filled {
-  border-color: #878a8c;
-  animation: pop 0.1s ease;
+  border-color: #00d4ff;
+  animation: arcadePop 0.15s ease;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
+@keyframes arcadePop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .current {
-  border-color: #565758;
+  border-color: #ffff00;
+  border-width: 4px;
+  box-shadow:
+    0 0 20px rgba(255, 255, 0, 0.5),
+    inset 0 0 20px rgba(255, 255, 0, 0.1);
+  animation: cursorBlink 0.8s steps(2) infinite;
+}
+
+@keyframes cursorBlink {
+  0%,
+  100% {
+    border-color: #ffff00;
+  }
+  50% {
+    border-color: #ffaa00;
+  }
 }
 
 .guessed {
   color: white;
   border-color: transparent;
+}
+
+/* Color hints - Arcade neon style */
+.correct {
+  background: linear-gradient(180deg, #00ff88 0%, #00cc6a 100%);
+  border-color: #00ff88;
+  color: #0a0a0a;
+  text-shadow: none;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+}
+
+.present {
+  background: linear-gradient(180deg, #ffff00 0%, #ffaa00 100%);
+  border-color: #ffaa00;
+  color: #0a0a0a;
+  text-shadow: none;
+  box-shadow: 0 0 20px rgba(255, 170, 0, 0.6);
+}
+
+.absent {
+  background: linear-gradient(180deg, #444 0%, #222 100%);
+  border-color: #333;
+  color: #666;
+  text-shadow: none;
+  box-shadow: none;
 }
 
 @keyframes pop {
@@ -72,5 +215,31 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+/* Reveal animation */
+@keyframes reveal {
+  0% {
+    transform: rotateX(0);
+    background: #1a1a2e;
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
   }
 }

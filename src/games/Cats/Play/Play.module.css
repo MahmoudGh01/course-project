@@ -4,6 +4,7 @@
   align-items: center;
   min-height: 80vh;
   padding: 20px;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 100%);
 }
 
 .card {
@@ -16,21 +17,57 @@
   flex-direction: column;
   gap: 24px;
   align-items: center;
+  padding: 24px;
+  border-top: 3px solid #ff0055;
+  position: relative;
+  z-index: 1;
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 700;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 20px;
+  font-weight: 400;
   margin: 0;
   text-align: center;
-  color: #333;
+  color: #ff0055;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #ff0055;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 10px #ff0055,
+    0 0 20px #ff0055;
+  animation: catTitlePulse 2s ease-in-out infinite;
+}
+
+@keyframes catTitlePulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px #ff0055,
+      0 0 20px #ff0055;
+  }
+  50% {
+    text-shadow:
+      0 0 20px #ff0055,
+      0 0 40px #ff0055,
+      0 0 60px #ff0055;
+  }
 }
 
 .description {
-  font-size: 16px;
-  color: #666;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #00d4ff;
   text-align: center;
   margin: 0;
+  padding: 12px 16px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 2px solid #00d4ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 2;
 }
 
 .button {
@@ -38,8 +75,129 @@
 }
 
 .metadata {
-  width: 100%;
+  width: calc(100% + 48px);
   text-align: center;
-  color: #999;
-  font-size: 14px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #666;
+  padding: 16px;
+  border-top: 3px solid #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+  margin: 0 -24px -24px -24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Info panel - Arcade score display style */
+.infoPanel {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  border: 3px solid #ffff00;
+  background: rgba(255, 255, 0, 0.05);
+  position: relative;
+}
+
+/* Decorative corners */
+.infoPanel::before,
+.infoPanel::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffff00;
+}
+
+.infoPanel::before {
+  top: -3px;
+  left: -3px;
+}
+
+.infoPanel::after {
+  bottom: -3px;
+  right: -3px;
+}
+
+.infoItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  border: 2px solid #333;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+}
+
+.infoLabel {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.infoValue {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 16px;
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+/* Cat counter - lives style */
+.catCounter {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.catIcon {
+  font-size: 20px;
+  animation: catBounce 0.5s ease-in-out infinite alternate;
+}
+
+.catIcon:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.catIcon:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes catBounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Next cat button styling */
+.nextButton {
+  position: relative;
+  overflow: hidden;
+}
+
+.nextButton::after {
+  content: 'PRESS START';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 6px;
+  color: #ffff00;
+  animation: pressStart 1s steps(2) infinite;
+  white-space: nowrap;
+}
+
+@keyframes pressStart {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

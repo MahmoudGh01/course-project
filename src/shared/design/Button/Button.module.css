@@ -1,73 +1,208 @@
 .button {
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  border: 3px solid;
+  border-radius: 0;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
+  transition: all 0.1s ease;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+/* Pixel art style shadow */
+.button::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+  transition: all 0.1s ease;
+}
+
+.button:focus-visible {
+  outline: 3px solid #ffff00;
+  outline-offset: 2px;
 }
 
 .button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translate(-2px, -2px);
+}
+
+.button:hover::after {
+  top: 6px;
+  left: 6px;
 }
 
 .button:active {
-  transform: translateY(0);
+  transform: translate(2px, 2px);
+}
+
+.button:active::after {
+  top: 0;
+  left: 0;
 }
 
 .button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  filter: grayscale(50%);
 }
 
-/* Variants */
+.button:disabled::after {
+  display: none;
+}
+
+/* Variants - Neon arcade colors */
 .primary {
-  background-color: #007bff;
-  color: white;
+  background-color: #00ff88;
+  color: #0a0a0a;
+  border-color: #00cc6a;
+  box-shadow:
+    0 0 10px #00ff88,
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .primary:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #00ffaa;
+  box-shadow:
+    0 0 20px #00ff88,
+    0 0 40px #00ff88,
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: #00d4ff;
+  color: #0a0a0a;
+  border-color: #00a8cc;
+  box-shadow:
+    0 0 10px #00d4ff,
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: #545b62;
+  background-color: #40e0ff;
+  box-shadow:
+    0 0 20px #00d4ff,
+    0 0 40px #00d4ff,
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .danger {
-  background-color: #dc3545;
+  background-color: #ff0055;
   color: white;
+  border-color: #cc0044;
+  box-shadow:
+    0 0 10px #ff0055,
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .danger:hover:not(:disabled) {
-  background-color: #c82333;
+  background-color: #ff3377;
+  box-shadow:
+    0 0 20px #ff0055,
+    0 0 40px #ff0055,
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Outline variants */
+.outlinePrimary {
+  background-color: transparent;
+  color: #00ff88;
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.outlinePrimary:hover:not(:disabled) {
+  background-color: #00ff88;
+  color: #0a0a0a;
+  box-shadow: 0 0 20px #00ff88;
+}
+
+.outlineSecondary {
+  background-color: transparent;
+  color: #00d4ff;
+  border-color: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.outlineSecondary:hover:not(:disabled) {
+  background-color: #00d4ff;
+  color: #0a0a0a;
+  box-shadow: 0 0 20px #00d4ff;
+}
+
+.outlineDanger {
+  background-color: transparent;
+  color: #ff0055;
+  border-color: #ff0055;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+}
+
+.outlineDanger:hover:not(:disabled) {
+  background-color: #ff0055;
+  color: white;
+  box-shadow: 0 0 20px #ff0055;
+}
+
+/* Special arcade variant */
+.arcade {
+  background: linear-gradient(180deg, #ffff00 0%, #ffaa00 100%);
+  color: #0a0a0a;
+  border-color: #cc8800;
+  box-shadow:
+    0 0 15px #ffaa00,
+    inset 0 0 20px rgba(255, 255, 255, 0.3);
+  animation: arcadePulse 2s ease-in-out infinite;
+}
+
+.arcade:hover:not(:disabled) {
+  animation: none;
+  box-shadow:
+    0 0 30px #ffaa00,
+    0 0 60px #ffaa00;
+}
+
+@keyframes arcadePulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 15px #ffaa00,
+      inset 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 25px #ffaa00,
+      0 0 40px #ffaa00,
+      inset 0 0 20px rgba(255, 255, 255, 0.3);
+  }
 }
 
 /* Sizes */
 .small {
-  padding: 6px 12px;
-  font-size: 14px;
+  padding: 8px 16px;
+  font-size: 10px;
 }
 
 .medium {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 12px 24px;
+  font-size: 12px;
 }
 
 .large {
-  padding: 14px 28px;
-  font-size: 18px;
+  padding: 16px 32px;
+  font-size: 14px;
 }
 
 .fullWidth {

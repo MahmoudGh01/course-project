@@ -45,7 +45,7 @@ export const getEntryByPlayer = (
     return null
   }
   return (
-    leaderboard.entries.find((entry) => entry.player.id === playerId) || null
+    leaderboard.entries.find((entry) => entry.player.id === playerId) ?? null
   )
 }
 

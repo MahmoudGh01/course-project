@@ -28,12 +28,15 @@ const players: Player[] = [
 // Helper to create entries with proper ranking
 const createEntries = (
   gameSlug: string,
-  scores: { playerId: string; score: number; daysAgo: number }[],
+  scores: Array<{ playerId: string; score: number; daysAgo: number }>,
 ): LeaderboardEntry[] => {
   return scores
     .sort((a, b) => b.score - a.score)
     .map((entry, index) => {
-      const player = players.find((p) => p.id === entry.playerId)!
+      const player = players.find((p) => p.id === entry.playerId)
+      if (!player) {
+        throw new Error(`Player not found: ${entry.playerId}`)
+      }
       const date = new Date()
       date.setDate(date.getDate() - entry.daysAgo)
       return {

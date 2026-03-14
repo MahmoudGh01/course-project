@@ -1,0 +1,263 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 20px;
+  color: #00ff88;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0 0 8px 0;
+  text-shadow:
+    0 0 10px #00ff88,
+    0 0 20px #00ff88;
+}
+
+.subtitle {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #ffff00;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.leaderboardTable {
+  width: 100%;
+  max-width: 700px;
+  border: 4px solid #00d4ff;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.3),
+    8px 8px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT scanline effect */
+.leaderboardTable::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 100px;
+  gap: 16px;
+  padding: 16px 20px;
+  background: linear-gradient(90deg, #00d4ff, #00ff88);
+  border-bottom: 4px solid #00a8cc;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #0a0a0a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.entriesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 100px;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 2px solid #333;
+  align-items: center;
+  transition: background 0.1s ease;
+}
+
+.entry:hover {
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+/* Top 3 special styling */
+.entry:nth-child(1) {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
+}
+
+.entry:nth-child(2) {
+  background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), transparent);
+}
+
+.entry:nth-child(3) {
+  background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), transparent);
+}
+
+.rankCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rank {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 16px;
+  min-width: 30px;
+}
+
+.rank1 {
+  color: #ffd700;
+  text-shadow: 0 0 15px #ffd700;
+}
+
+.rank2 {
+  color: #c0c0c0;
+  text-shadow: 0 0 10px #c0c0c0;
+}
+
+.rank3 {
+  color: #cd7f32;
+  text-shadow: 0 0 10px #cd7f32;
+}
+
+.rankDefault {
+  color: #666;
+}
+
+.trophy {
+  font-size: 20px;
+}
+
+.playerName {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 14px;
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88;
+  text-align: right;
+}
+
+.date {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  color: #666;
+  text-align: right;
+}
+
+.navigation {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.navLink {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 12px 24px;
+  border: 3px solid;
+  background: transparent;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.backLink {
+  color: #ff0055;
+  border-color: #ff0055;
+}
+
+.backLink:hover {
+  background: #ff0055;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+}
+
+.playLink {
+  color: #00ff88;
+  border-color: #00ff88;
+}
+
+.playLink:hover {
+  background: #00ff88;
+  color: #0a0a0a;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.notFound {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.notFoundTitle {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 20px;
+  color: #ff0055;
+  margin-bottom: 16px;
+  text-shadow: 0 0 20px #ff0055;
+}
+
+.notFoundMessage {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.emptyState {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+  padding: 40px;
+  text-transform: uppercase;
+}
+
+/* Blinking cursor for empty state */
+.emptyState::after {
+  content: '_';
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

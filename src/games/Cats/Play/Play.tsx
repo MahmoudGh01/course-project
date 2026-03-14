@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import Button from '#design/Button'
 import Card from '#design/Card'
+import GameLeaderboard from '#design/GameLeaderboard'
 
 import { useCat } from '../api'
 
@@ -72,6 +73,8 @@ const PlayView: React.FC<PlayViewProps> = ({
         >
           Get New Cat! 🐱
         </Button>
+
+        <GameLeaderboard gameSlug="cats" topN={3} />
 
         {cat && (
           <div className={styles.metadata}>

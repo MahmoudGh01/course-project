@@ -1,4 +1,5 @@
 import Card from '#design/Card'
+import GameLeaderboard from '#design/GameLeaderboard'
 
 import { WordleProvider } from './context'
 import Guesses from './Guesses'
@@ -18,6 +19,8 @@ const Play: React.FC = (): React.JSX.Element => {
             <p className={styles.description}>
               Guess the 5-letter word in 6 tries
             </p>
+
+            <GameLeaderboard gameSlug="wordle" topN={3} />
 
             <Guesses />
             <Keyboard />
